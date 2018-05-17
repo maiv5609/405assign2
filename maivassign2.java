@@ -51,17 +51,63 @@ public class maivassign2{
 
 				sortbyFinish(main);
 
+				System.out.println("Finished Sorting");
+				//TODO: Test print, remove this
+				for (int i=0; i<main.size(); i++){
+					System.out.print("[" + (main.get(i)).getStart() + ", " + (main.get(i)).getEnd() + "] ");
+				}
+				System.out.println("");
 
 
-				//Note: might need to sort by another condition other than just finishing time
-				//Using 2 structures
-				//Store initial data
-				//Sort by finishing time and put into other structure
+				int index = 0;
+				int tempSize = 0;
+				int classroom  = 0;
+				ArrayList<intPair> temp = new ArrayList<intPair>();
 				//Start by removing the first interval with the earilest finish time
 				//remove next earilest finishing time that doesn't overlap
-				//continue until end
-
+				//continue until empty
 				//Begin again with earilest finish time and continue process until no rooms are left, the number of iterations are the number of rooms you need
+				while(!main.isEmpty()){
+					if(temp.isEmpty()){
+						//if empty remove first
+						classroom++;
+						curr = main.remove(0);
+						temp.add(curr);
+						tempSize = temp.size();
+						// System.out.print("\nadded: ");
+						// System.out.print("[" + (temp.get(tempSize-1)).getStart() + ", " + (temp.get(tempSize-1)).getEnd() + "] ");
+					}
+
+					// System.out.println("");
+					// System.out.print("Current index: " + index + ": ");
+					// System.out.print("[" + (main.get(index)).getStart() + ", " + (main.get(index)).getEnd() + "] ");
+
+					if(main.size() != 0 && (main.get(index)).getStart() > curr.getEnd()){
+						//index event's start time is after curr's end time
+						curr = main.remove(index);
+						temp.add(curr);
+						tempSize = temp.size();
+						// System.out.print("\nadded: ");
+						// System.out.print("[" + (temp.get(tempSize-1)).getStart() + ", " + (temp.get(tempSize-1)).getEnd() + "] ");
+					}
+
+					index++;
+					//If at last element, print current temp and reset
+					if(index == main.size() || main.size() == 0){
+						index = 0;
+						System.out.println("");
+						System.out.print("Classroom " + classroom + ": ");
+						for (int i=0; i < temp.size(); i++){
+							System.out.print("[" + (temp.get(i)).getStart() + ", " + (temp.get(i)).getEnd() + "] ");
+						}
+						temp.clear();
+					}
+				}
+				if(classroom == 1){
+					System.out.println("One classroom needed");
+				}else{
+					System.out.println("\n" + classroom + " classrooms needed");
+				}
 
 			}catch(IOException ex){
 				ex.printStackTrace();
@@ -70,54 +116,33 @@ public class maivassign2{
 	}
 	/*
 	Takes in ArrayList of intPair and sorts intervals by finishing time
-	Sorts using mergesort
+	Sorts using simple bubblesort
 	 */
 	public static void sortbyFinish(ArrayList<intPair> intrList){
-		//Look at geeksforgeeks mergesort
-		int length = intrList.size();
-		int mid = 0;
-		int b = 0;
-		mid = length/2;
-		if((length%2) == 0){
-			//even
-			//TODO: test print, remove this
-			System.out.println("");
-			System.out.println("Even");
-			b = (length/2);
-		}else{
-			//odd
-			//TODO: test print, remove this
-			System.out.println("");
-			System.out.println("Odd");
-			b = (length/2)+1;
+		int end = intrList.size();
+		intPair temp;
+		int i = 0;
+		boolean swapped = true;
+
+		while(swapped == true && i < (end-1)){
+			swapped = false;
+			for(int j = 0; j< end-i-1; j++){
+					if(intrList.get(j).getEnd() > intrList.get(j+1).getEnd()){
+						//bigger, swap
+						temp = intrList.get(j);
+						intrList.set(j, intrList.get(j+1));
+						intrList.set(j+1, temp);
+						swapped = true;
+					}
+			}
+			i++;
 		}
 
-		intPair left[] = new intPair[mid];
-		intPair right[] = new intPair[b];
+		// //TODO: Test print, remove this
+		// for (int f=0; f<intrList.size(); f++){
+		// 	System.out.print((intrList.get(f)).getEnd()+" ");
+		// }
 
-		//TODO: test print, remove this
-		System.out.println("");
-		System.out.println("Sorting");
-		System.out.println("Mid: " + mid);
-		System.out.println("b: " + b);
-		System.out.println("");
-
-		//Bring over from ArrayList to temps
-		for(int x=0; x<mid; x++){
-			left[x] = intrList.get(x);
-		}
-		for(int x=0; x<(length-mid); x++){
-			right[x] = intrList.get(x+mid);
-		}
-
-		//TODO: test print, remove this
-		for(int x=0; x<mid; x++){
-			System.out.print(left[x].getEnd() + " ");
-		}
-		for(int x=0; x<(length-mid); x++){
-			System.out.print(right[x].getEnd() + " ");
-		}
-		System.out.println("");
 	}
 
 }
