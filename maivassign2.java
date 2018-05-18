@@ -44,20 +44,7 @@ public class maivassign2{
 					}
 				}
 
-				//TODO: Test print, remove this
-				for (int i=0; i<main.size(); i++){
-					System.out.print((main.get(i)).getEnd()+" ");
-				}
-
 				sortbyFinish(main);
-
-				System.out.println("Finished Sorting");
-				//TODO: Test print, remove this
-				for (int i=0; i<main.size(); i++){
-					System.out.print("[" + (main.get(i)).getStart() + ", " + (main.get(i)).getEnd() + "] ");
-				}
-				System.out.println("");
-
 
 				int index = 0;
 				int tempSize = 0;
@@ -74,13 +61,7 @@ public class maivassign2{
 						curr = main.remove(0);
 						temp.add(curr);
 						tempSize = temp.size();
-						// System.out.print("\nNew Classroom, added: ");
-						// System.out.print("[" + (temp.get(tempSize-1)).getStart() + ", " + (temp.get(tempSize-1)).getEnd() + "] ");
 					}
-
-					// System.out.println("");
-					// System.out.print("Current index: " + index + ": ");
-					// System.out.print("[" + (main.get(index)).getStart() + ", " + (main.get(index)).getEnd() + "] ");
 
 					if(main.size() != 0 && (main.get(index)).getStart() >= curr.getEnd()){
 						//index event's start time is after or equal curr's end time
@@ -88,8 +69,6 @@ public class maivassign2{
 						index--;
 						temp.add(curr);
 						tempSize = temp.size();
-						// System.out.print("\nadded: ");
-						// System.out.print("[" + (temp.get(tempSize-1)).getStart() + ", " + (temp.get(tempSize-1)).getEnd() + "] ");
 					}
 
 					index++;
@@ -138,23 +117,19 @@ public class maivassign2{
 			}
 			i++;
 		}
-
-		// //TODO: Test print, remove this
-		// for (int f=0; f<intrList.size(); f++){
-		// 	System.out.print((intrList.get(f)).getEnd()+" ");
-		// }
-
 	}
 
 }
 
+/*
+Used to store interval information
+*/
 class intPair{
-	double start, end, diff;
+	double start, end;
 
 	intPair(double start, double end){
 		this.start = start;
 		this.end = end;
-		this.diff = end - start;
 	}
 
 	public double getStart(){
