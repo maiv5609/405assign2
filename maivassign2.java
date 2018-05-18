@@ -74,7 +74,7 @@ public class maivassign2{
 						curr = main.remove(0);
 						temp.add(curr);
 						tempSize = temp.size();
-						// System.out.print("\nadded: ");
+						// System.out.print("\nNew Classroom, added: ");
 						// System.out.print("[" + (temp.get(tempSize-1)).getStart() + ", " + (temp.get(tempSize-1)).getEnd() + "] ");
 					}
 
@@ -82,9 +82,10 @@ public class maivassign2{
 					// System.out.print("Current index: " + index + ": ");
 					// System.out.print("[" + (main.get(index)).getStart() + ", " + (main.get(index)).getEnd() + "] ");
 
-					if(main.size() != 0 && (main.get(index)).getStart() > curr.getEnd()){
-						//index event's start time is after curr's end time
+					if(main.size() != 0 && (main.get(index)).getStart() >= curr.getEnd()){
+						//index event's start time is after or equal curr's end time
 						curr = main.remove(index);
+						index--;
 						temp.add(curr);
 						tempSize = temp.size();
 						// System.out.print("\nadded: ");
@@ -104,7 +105,7 @@ public class maivassign2{
 					}
 				}
 				if(classroom == 1){
-					System.out.println("One classroom needed");
+					System.out.println("\nOne classroom needed");
 				}else{
 					System.out.println("\n" + classroom + " classrooms needed");
 				}
